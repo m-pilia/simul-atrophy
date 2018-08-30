@@ -127,7 +127,7 @@ ScalarAnisotropicDiffusionWithMaskFunction< TImage >
     ++fit;
     }
 
-  this->SetAverageGradientMagnitudeSquared( (double)( accumulator / counter ) );
+  this->SetAverageGradientMagnitudeSquared( (SA_FLOAT)( accumulator / counter ) );
 }
 } // end namespace itk
 

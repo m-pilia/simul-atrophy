@@ -23,8 +23,8 @@ int main(int argc, char **argv)
     std::string regionSizeString;
     std::string directionString;
 
-    double      insideValue;
-    double      outsideValue;
+    SA_FLOAT      insideValue;
+    SA_FLOAT      outsideValue;
 
     //------------------- Set up the command line options database and parse them -----------------------------//
     boost::program_options::options_description optionsDescription("binarize the input image by setting one to the pixels having values within the given range");
@@ -35,8 +35,8 @@ int main(int argc, char **argv)
             ("indexStart,s",boost::program_options::value< std::string >(&indexStartString), "Start index of the region in the format x,y,z")
             ("regionSize,z",boost::program_options::value< std::string >(&regionSizeString), "Size of the region in the format x,y,z")
             ("direction,d",boost::program_options::value< std::string >(&directionString), "direction (-1 or 1) in each of the axes to move in the format x,y,z")
-            ("inside,x",boost::program_options::value< double >(&insideValue)->default_value(1), "Inside value")
-            ("outside,y",boost::program_options::value< double >(&outsideValue)->default_value(0), "Outside Value")
+            ("inside,x",boost::program_options::value< SA_FLOAT >(&insideValue)->default_value(1), "Inside value")
+            ("outside,y",boost::program_options::value< SA_FLOAT >(&outsideValue)->default_value(0), "Outside Value")
             ;
 
     boost::program_options::variables_map options;
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     }
 
     //---------------------  Read the image ----------------------//
-    typedef itk::Image<double, 3>              ImageType;
+    typedef itk::Image<SA_FLOAT, 3>              ImageType;
     typedef itk::ImageFileReader<ImageType>     ImageReaderType;
 
     ImageReaderType::Pointer reader = ImageReaderType::New();
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
 
 //    for(out_it.GoToBegin(), in_it.GoToBegin(); !out_it.IsAtEnd(); ++out_it, ++in_it) {
 //        {
-//            double curr_val = in_it.Get();
+//            SA_FLOAT curr_val = in_it.Get();
 //            if(curr_val > lowerThr && curr_val < upperThr )
 //                out_it.Set(1);
 //        }

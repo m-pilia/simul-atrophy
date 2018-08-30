@@ -17,10 +17,10 @@ int main(int argc, char **argv)
 {
     std::string inImgFile;
     std::string outImgFile;
-    double      lowerThr;
-    double      upperThr;
-    double      insideVal;
-    double      outsideVal;
+    SA_FLOAT      lowerThr;
+    SA_FLOAT      upperThr;
+    SA_FLOAT      insideVal;
+    SA_FLOAT      outsideVal;
     bool        outsideSameAsInput;
 
     //------------------- Set up the command line options database and parse them -----------------------------//
@@ -29,11 +29,11 @@ int main(int argc, char **argv)
             ("help,h", "display help message")
             ("input,i", boost::program_options::value< std::string >(&inImgFile), "input FileName")
             ("output,o", boost::program_options::value< std::string >(&outImgFile), "output filename")
-            ("lower,l",boost::program_options::value< double >(&lowerThr), "Lower value, includes this value and above as in the selected region.")
-            ("upper,u",boost::program_options::value< double >(&upperThr), "Upper value, includes this value and below as in the selected region.")
-            ("inside,x",boost::program_options::value< double >(&insideVal)->default_value(1), "Inside pixel value")
+            ("lower,l",boost::program_options::value< SA_FLOAT >(&lowerThr), "Lower value, includes this value and above as in the selected region.")
+            ("upper,u",boost::program_options::value< SA_FLOAT >(&upperThr), "Upper value, includes this value and below as in the selected region.")
+            ("inside,x",boost::program_options::value< SA_FLOAT >(&insideVal)->default_value(1), "Inside pixel value")
             ("outsideSameAsInput,s",boost::program_options::value< bool >(&outsideSameAsInput)->default_value(false), "copy input image everywhere except at the regions with given range")
-            ("outside,y",boost::program_options::value< double >(&outsideVal)->default_value(0), "if outsideSameAsInput is false, sets this value to all regions outside the given range labels.")
+            ("outside,y",boost::program_options::value< SA_FLOAT >(&outsideVal)->default_value(0), "if outsideSameAsInput is false, sets this value to all regions outside the given range labels.")
             ;
 
     boost::program_options::variables_map options;
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     }
 
     //---------------------  Read the image type ----------------------//
-    typedef itk::Image<double, 3>              ImageType;
+    typedef itk::Image<SA_FLOAT, 3>              ImageType;
     typedef itk::ImageFileReader<ImageType>     ImageReaderType;
 
     ImageReaderType::Pointer reader = ImageReaderType::New();
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 
     for(out_it.GoToBegin(), in_it.GoToBegin(); !out_it.IsAtEnd(); ++out_it, ++in_it) {
         {
-            double curr_val = in_it.Get();
+            SA_FLOAT curr_val = in_it.Get();
             if(curr_val >= lowerThr && curr_val <= upperThr )
                 out_it.Set(insideVal);
         }

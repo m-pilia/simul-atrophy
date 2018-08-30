@@ -50,13 +50,13 @@ LabelImageGenericInterpolateImageFunction<TInputImage, TInterpolator, TCoordRep>
 {
 	/** Interpolate the binary mask corresponding to each label and return the label
 	 * with the highest value */
-	double value=0;
+	SA_FLOAT value=0;
 	typename TInputImage::PixelType best_label=0;
 	typename LabelSetType::const_iterator it;
 	int i;
 	for(it=m_Labels.begin(), i = 0;
 		it != m_Labels.end(); ++it, ++i) {
-		double tmp = m_InternalInterpolators[i]->EvaluateAtContinuousIndex(cindex);
+		SA_FLOAT tmp = m_InternalInterpolators[i]->EvaluateAtContinuousIndex(cindex);
 		if( tmp > value) {
 			value = tmp;
 			best_label = (*it);

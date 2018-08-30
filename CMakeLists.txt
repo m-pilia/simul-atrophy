@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 2.8)
 project(simul@atrophy)
 
+set(SA_FLOAT double CACHE STRING "Floating point type (must match the size of PetscScalar)")
+
+message("Building with floating point type '${SA_FLOAT}'")
+add_definitions(-DSA_FLOAT=${SA_FLOAT})
+
 # add cmake modules path to the default one:
 MESSAGE("The directory is: ${CMAKE_SOURCE_DIR}")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
-# Use cxx11 or not; If yes run cmake as: cmake -DUSE_CXX11:bool=true .. 
+# Use cxx11 or not; If yes run cmake as: cmake -DUSE_CXX11:bool=true ..
 set(USE_CXX11 false CACHE BOOL "use cxx11: true or false")
 
 if(USE_CXX11)
@@ -46,5 +51,3 @@ ENDIF(ITK_FOUND)
 find_package(Boost COMPONENTS program_options REQUIRED)
 
 add_subdirectory(src)
-
-

@@ -129,7 +129,7 @@ PetscErrorCode PetscAdLem3D<DIM>::getRhsArray()
 template <unsigned int DIM>
 //The function expects pos[] to have valid position, that is within
 //the size that was originally used by the user to create the model.
-double PetscAdLem3D<DIM>::getRhsAt(unsigned int pos[], unsigned int component)
+SA_FLOAT PetscAdLem3D<DIM>::getRhsAt(unsigned int pos[], unsigned int component)
 {
     PetscFunctionBeginUser;
     PetscInt x,y,z,xn,yn,zn;
@@ -156,7 +156,7 @@ double PetscAdLem3D<DIM>::getRhsAt(unsigned int pos[], unsigned int component)
 //The function expects pos[] to have valid position, that is within
 //the size that was originally used by the user to create the model.
 template <unsigned int DIM>
-double PetscAdLem3D<DIM>::getSolVelocityAt(unsigned int pos[], unsigned int component)
+SA_FLOAT PetscAdLem3D<DIM>::getSolVelocityAt(unsigned int pos[], unsigned int component)
 {
     PetscFunctionBeginUser;
     PetscInt x,y,z,xn,yn,zn;
@@ -170,7 +170,7 @@ double PetscAdLem3D<DIM>::getSolVelocityAt(unsigned int pos[], unsigned int comp
         SETERRQ(PETSC_COMM_WORLD,PETSC_ERR_ARG_OUTOFRANGE,"out of range position asked for velocity solution.\n");
 
     //Velocity solution were computed at faces, so interpolate to get at cell centers.
-    double solAtcenter;
+    SA_FLOAT solAtcenter;
     if (component == 0) { //x-component vx_c = vx(i,j,k) + vx(i+1,j,k)
         solAtcenter = mSolArray[(x+ xn*y + xn*yn*z)*4 + component]
                 + mSolArray[(x+1 + xn*y + xn*yn*z)*4 + component];
@@ -188,7 +188,7 @@ double PetscAdLem3D<DIM>::getSolVelocityAt(unsigned int pos[], unsigned int comp
 #undef __FUNCT__
 #define __FUNCT__ "getSolPressureAt"
 template <unsigned int DIM>
-double PetscAdLem3D<DIM>::getSolPressureAt(unsigned int pos[])
+SA_FLOAT PetscAdLem3D<DIM>::getSolPressureAt(unsigned int pos[])
 {
     PetscFunctionBeginUser;
     PetscInt x,y,z,xn,yn,zn;
@@ -207,7 +207,7 @@ double PetscAdLem3D<DIM>::getSolPressureAt(unsigned int pos[])
 #define __FUNCT__ "getDivergenceAt"
 template <unsigned int DIM>
 //the size that was originally used by the user to create the model.
-double PetscAdLem3D<DIM>::getDivergenceAt(unsigned int pos[])
+SA_FLOAT PetscAdLem3D<DIM>::getDivergenceAt(unsigned int pos[])
 {
     PetscFunctionBeginUser;
     if(mIsDiv12pointStencil)
@@ -231,7 +231,7 @@ double PetscAdLem3D<DIM>::getDivergenceAt(unsigned int pos[])
         SETERRQ(PETSC_COMM_WORLD,PETSC_ERR_ARG_OUTOFRANGE,"out of range position asked for velocity solution.\n");
 
     //Velocity solution were computed at faces, so the divergence lies in the cell centers.
-    double divergence;
+    SA_FLOAT divergence;
     //a = vx(i+1,j,k) - vx(i,j,k) + vy(i,j+1,k) - vy(i,j,k) + vz(i,j,k+1) - vz(i,j,k)
     divergence = (mSolArray[(x+1 + xn*y + xn*yn*z)*4 + 0]
 		  -mSolArray[(x + xn*y + xn*yn*z)*4 + 0])/hx;

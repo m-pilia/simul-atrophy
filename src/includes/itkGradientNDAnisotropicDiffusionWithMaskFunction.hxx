@@ -24,7 +24,7 @@
 namespace itk
 {
 template< typename TImage >
-double GradientNDAnisotropicDiffusionWithMaskFunction< TImage >
+SA_FLOAT GradientNDAnisotropicDiffusionWithMaskFunction< TImage >
 ::m_MIN_NORM = 1.0e-10;
 
 template< typename TImage >
@@ -87,10 +87,10 @@ GradientNDAnisotropicDiffusionWithMaskFunction< TImage >
 {
     unsigned int i, j;
 
-    double accum;
-    double accum_d;
-    double Cx;
-    double Cxd;
+    SA_FLOAT accum;
+    SA_FLOAT accum_d;
+    SA_FLOAT Cx;
+    SA_FLOAT Cxd;
 
     // PixelType is scalar in this context
     PixelRealType delta;

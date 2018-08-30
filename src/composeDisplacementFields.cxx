@@ -81,7 +81,7 @@ int main(int argc, char **argv)
     //
 
     //---------------------  displacement field types ----------------------//
-    typedef itk::Vector<double, 3>                      DisplacementPixelType;
+    typedef itk::Vector<SA_FLOAT, 3>                      DisplacementPixelType;
     typedef itk::Image<DisplacementPixelType, 3>        DisplacementImageType;
     typedef itk::ImageFileReader<DisplacementImageType> DisplacementReaderType;
 

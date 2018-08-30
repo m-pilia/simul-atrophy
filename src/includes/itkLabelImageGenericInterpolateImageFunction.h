@@ -19,7 +19,7 @@ namespace itk
  * * \ingroup ITKImageFunction
  */
 
-template <typename TInputImage,template<class, typename> class TInterpolator, typename TCoordRep=double >
+template <typename TInputImage,template<class, typename> class TInterpolator, typename TCoordRep=SA_FLOAT >
 class LabelImageGenericInterpolateImageFunction :
   public InterpolateImageFunction<TInputImage, TCoordRep>
 {
@@ -55,7 +55,7 @@ public:
   /** ContinuousIndex typedef support. */
   typedef typename Superclass::ContinuousIndexType ContinuousIndexType;
 
-	typedef LabelSelectionImageAdaptor<TInputImage,double> LabelSelectionAdaptorType;
+	typedef LabelSelectionImageAdaptor<TInputImage,SA_FLOAT> LabelSelectionAdaptorType;
 
 	// The interpolator used for individual binary masks corresponding to each label
 	typedef TInterpolator<LabelSelectionAdaptorType,TCoordRep> InternalInterpolatorType;

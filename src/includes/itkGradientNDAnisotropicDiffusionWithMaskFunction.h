@@ -136,7 +136,7 @@ protected:
   NeighborhoodSizeValueType m_Center;
   NeighborhoodSizeValueType m_Stride[ImageDimension];
 
-  static double m_MIN_NORM;
+  static SA_FLOAT m_MIN_NORM;
 
 private:
   GradientNDAnisotropicDiffusionWithMaskFunction(const Self &); //purposely not

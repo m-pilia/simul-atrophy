@@ -40,10 +40,10 @@ enum bcType {
     DIRICHLET_AT_WALLS, DIRICHLET_AT_SKULL
 };
 
-typedef typename itk::Image<double, DIM>                  ScalarImageType;
+typedef typename itk::Image<SA_FLOAT, DIM>                  ScalarImageType;
 typedef typename itk::Image<int, DIM>                     IntegerImageType;
-typedef typename itk::Image<itk::Vector<double,DIM>, DIM>   VectorImageType;
-typedef typename itk::Image<itk::DiffusionTensor3D< double >, DIM>  TensorImageType;
+typedef typename itk::Image<itk::Vector<SA_FLOAT,DIM>, DIM>   VectorImageType;
+typedef typename itk::Image<itk::DiffusionTensor3D< SA_FLOAT >, DIM>  TensorImageType;
 
 typedef typename itk::ImageFileReader<IntegerImageType> IntegerImageReaderType;
 typedef typename itk::ImageFileReader<ScalarImageType>  ScalarImageReaderType;
@@ -61,29 +61,29 @@ int getYnum() const;
 int getZnum() const;
 
 
-double getXspacing() const;
-double getYspacing() const;
-double getZspacing() const;
+SA_FLOAT getXspacing() const;
+SA_FLOAT getYspacing() const;
+SA_FLOAT getZspacing() const;
 
 // ---------- Boundary condition related functions
 void setBoundaryConditions(const std::string& boundaryCondition, bool relaxIcInCsf, float relaxIcPressureCoeff=0.,
 			   bool zeroVelAtFalx=false, bool slidingAtFalx=false, int falxZeroVelDir=0);
 bcType getBcType() const;
-void setWallVelocities(std::vector<double>& wallVelocities);
-void getWallVelocities(std::vector<double>& wallVelocities); //copies mWallVelocities content.
+void setWallVelocities(std::vector<SA_FLOAT>& wallVelocities);
+void getWallVelocities(std::vector<SA_FLOAT>& wallVelocities); //copies mWallVelocities content.
 
 //--***********Model parameters related functions***************//
 void setLameParameters(bool isMuConstant, bool useTensorLambda,
-		       double muBrain = 1, double muCsf = 1,
-		       double lambdaBrain = 1, double lambdaCsf = 1,
+		       SA_FLOAT muBrain = 1, SA_FLOAT muCsf = 1,
+		       SA_FLOAT lambdaBrain = 1, SA_FLOAT lambdaCsf = 1,
 		       std::string lambdaImageFile = "", std::string muImageFile = "");
 bool isMuConstant() const;
 bool isLambdaTensor() const;
 
-double getMuBrain() const;
-double getMuCsf() const;
-double getLambdaBrain() const;
-double getLambdaCsf() const;
+SA_FLOAT getMuBrain() const;
+SA_FLOAT getMuCsf() const;
+SA_FLOAT getLambdaBrain() const;
+SA_FLOAT getLambdaCsf() const;
 
 
 // ---------- Default label values denotes that these labels are irrelevant for the selected boundary conditions.
@@ -104,8 +104,8 @@ int getFalxSlidingZeroVelDir() const; //Return the component (dir) in which velo
 //string should be either of "mu", "lambda" or "atrophy".
 //(Mi,Mj) is the element position of a tensor. Currently lambda can be a tensor.
 // Top left position is: (Mi,Mj)=(0,0).
-double dataAt(std::string dType, int x, int y, int z, unsigned int Mi, unsigned int Mj) const;
-double brainMaskAt(int x, int y, int z) const; //returns int unlike dataAt()
+SA_FLOAT dataAt(std::string dType, int x, int y, int z, unsigned int Mi, unsigned int Mj) const;
+SA_FLOAT brainMaskAt(int x, int y, int z) const; //returns int unlike dataAt()
 
 int getRelaxIcLabel() const;  //Return the label present in BrainMask where the IC is to be relaxed.
 //Relaxes IC on those region where maskImageFile has values relaxIcLabel.
@@ -140,7 +140,7 @@ void writeResidual(std::string fileName);
 //Atrophy related functions
 void setAtrophy(typename ScalarImageType::Pointer inputAtrophy);
 void setAtrophy(std::string atrophyImageFile);
-bool isAtrophySumZero(double sumMaxValue);
+bool isAtrophySumZero(SA_FLOAT sumMaxValue);
 typename ScalarImageType::Pointer getAtrophyImage();
 
 //If redistributeatrophy:
@@ -151,8 +151,8 @@ typename ScalarImageType::Pointer getAtrophyImage();
 //          call prescribeUniformexpansionincsf() (maskValue has no use when this is true)
 //else:
 //          set maskValue in the atrophy map in the regions where brainMask has label maskLabel.
-void modifyAtrophy(int maskLabel, double maskValue, bool redistributeAtrophy = false, bool relaxIcInCsf = true);
-void scaleAtrophy(double factor);
+void modifyAtrophy(int maskLabel, SA_FLOAT maskValue, bool redistributeAtrophy = false, bool relaxIcInCsf = true);
+void scaleAtrophy(SA_FLOAT factor);
 void prescribeUniformExpansionInCsf();//Set atrophy_in_csf  = - total_atrophy_elsewhere/num_of_csf_voxels.
 void writeAtrophyToFile(std::string fileName);
 
@@ -188,14 +188,14 @@ bool			mIsLambdaImageSet;	//true when mLambda is set.
 typename ScalarImageType::Pointer    mMu;	//Input Mu image; used when isMuConstant is false.
 bool			mIsMuImageSet;	// true when mMu is set.
 
-double			mMuBrain, mMuCsf;
-double			mLambdaBrain, mLambdaCsf;
+SA_FLOAT			mMuBrain, mMuCsf;
+SA_FLOAT			mLambdaBrain, mLambdaCsf;
 bool			mIsMuConstant;	//piecewise constant can have different mu values in tissue and CSF. Currently mUseMuImage has the same value as mIsMuConstant. This could change later!
 
 //Boundary condition:
 AdLem3D::bcType     mBc;
 bool		mIsBcSet;
-std::vector<double> mWallVelocities;	//velocity components vx,vy,vz on S,W,N,E,F,B walls.
+std::vector<SA_FLOAT> mWallVelocities;	//velocity components vx,vy,vz on S,W,N,E,F,B walls.
 
 // integer number to keep track of how many times the solver is solved.
 int mNumOfSolveCalls;
@@ -233,13 +233,13 @@ void setMu(typename ScalarImageType::Pointer inputMu);
 // Internal data access utility methods.
 // The class that inherits will have to provide public interface to these by
 // properly adapting to the grid type they use.
-double muAt(int x, int y, int z) const;
+SA_FLOAT muAt(int x, int y, int z) const;
 // Li and Lj are by default zero.
 // If mUseTensorLambda is false and Li and Lj have default argumetns,
 // then the method is implemented such a way that lambda is effectively a scalar.
-double lambdaAt(int x, int y, int z,
+SA_FLOAT lambdaAt(int x, int y, int z,
 		unsigned int Li = 0, unsigned int Lj = 0) const;
-double aAt(int x, int y, int z) const;
+SA_FLOAT aAt(int x, int y, int z) const;
 
 
 void updateStateAfterSolveCall(); // update all the state and track variables that depend on

@@ -68,7 +68,7 @@ int main(int argc,char **argv)
 	return EXIT_FAILURE;
     }
     //Read all the numbers and put them into a vector.
-    std::istream_iterator<double> start(labelTable), end;
+    std::istream_iterator<SA_FLOAT> start(labelTable), end;
     //std::vector<LabelImageType::PixelType> inLabels(start, end);
     LabelsVecType inLabels(start, end);
     std::cout << "Read " << inLabels.size() << " labels" << std::endl;

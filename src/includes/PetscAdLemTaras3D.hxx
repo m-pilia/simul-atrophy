@@ -1411,7 +1411,7 @@ PetscErrorCode PetscAdLemTaras3D::computeMatrixTaras3dConstantMu(
 PetscErrorCode PetscAdLemTaras3D::computeRHSTaras3dConstantMu(KSP ksp, Vec b, void *ctx)
 {
     PetscAdLemTaras3D    *user = (PetscAdLemTaras3D*)ctx;
-    std::vector<double> wallVel(18);
+    std::vector<SA_FLOAT> wallVel(18);
     user->getProblemModel()->getWallVelocities(wallVel);
     //indices for the walls, then use 0,1,2 as offsets to get vx,vy and vz respectively.
     unsigned int sWall(0), wWall(3), nWall(6), eWall(9), fWall(12), bWall(15);

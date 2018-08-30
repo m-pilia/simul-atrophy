@@ -24,11 +24,11 @@ public:
     AdLem3D<DIM>* getProblemModel() const;
     PetscBool isDiv12pointStencil();
 
-    double getRhsAt(unsigned int pos[3], unsigned int component);
-//    double getAtrophyGradientAt(unsigned int pos[3], unsigned int component);
-    double getSolVelocityAt(unsigned int pos[3],unsigned int component);
-    double getSolPressureAt(unsigned int pos[3]);
-    double getDivergenceAt(unsigned int pos[3]);
+    SA_FLOAT getRhsAt(unsigned int pos[3], unsigned int component);
+//    SA_FLOAT getAtrophyGradientAt(unsigned int pos[3], unsigned int component);
+    SA_FLOAT getSolVelocityAt(unsigned int pos[3],unsigned int component);
+    SA_FLOAT getSolPressureAt(unsigned int pos[3]);
+    SA_FLOAT getDivergenceAt(unsigned int pos[3]);
     PetscErrorCode writeResidual(std::string resultPath);
 
 protected:

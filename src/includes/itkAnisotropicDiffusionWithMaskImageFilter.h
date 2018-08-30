@@ -36,7 +36,7 @@ namespace itk
  *  This is an image-to-image filter.  The requirements for data types and
  *  dimensionality of the input and output are defined by subclasses.  In
  *  general, these filters expect images of real-valued types.  This means
- *  pixel types of floats, doubles, or a user-defined type with floating point
+ *  pixel types of floats, SA_FLOATs, or a user-defined type with floating point
  *  accuracy and arithmetic operations.
  *
  *  \par Parameters
@@ -104,8 +104,8 @@ public:
 
   /** Set/Get the conductance parameter governing sensitivity of the
       conductance equation. */
-  itkSetMacro(ConductanceParameter, double);
-  itkGetConstMacro(ConductanceParameter, double);
+  itkSetMacro(ConductanceParameter, SA_FLOAT);
+  itkGetConstMacro(ConductanceParameter, SA_FLOAT);
 
   /** Set/Get conductance image **/
   void SetConductanceImage(const typename InputImageType::Pointer conductanceImage) {
@@ -123,8 +123,8 @@ public:
 
   /** The following parameters are not used at this time.  Setting them will
       have no effect on the output */
-  itkSetMacro(ConductanceScalingParameter, double);
-  itkGetConstMacro(ConductanceScalingParameter, double);
+  itkSetMacro(ConductanceScalingParameter, SA_FLOAT);
+  itkGetConstMacro(ConductanceScalingParameter, SA_FLOAT);
 
   /** Supplies a fixed value for the average gradient magnitude of the image to
       the AnisotropicDiffusionWithMaskFunction at each iteration.  The average gradient
@@ -133,14 +133,14 @@ public:
       at a pixel.  This method is  useful in streaming applications to avoid
       block artifacts by overriding the normal gradient magnitude calculation
       (i.e. all image chunks are scaled uniformly). */
-  void SetFixedAverageGradientMagnitude(double a)
+  void SetFixedAverageGradientMagnitude(SA_FLOAT a)
   {
     m_FixedAverageGradientMagnitude = a;
     this->Modified();
     m_GradientMagnitudeIsFixed = true;
   }
 
-  itkGetConstMacro(FixedAverageGradientMagnitude, double);
+  itkGetConstMacro(FixedAverageGradientMagnitude, SA_FLOAT);
 
 protected:
   AnisotropicDiffusionWithMaskImageFilter();
@@ -160,11 +160,11 @@ private:
   AnisotropicDiffusionWithMaskImageFilter(const Self &); //purposely not implemented
   void operator=(const Self &);                  //purposely not implemented
 
-  double       m_ConductanceParameter;
+  SA_FLOAT       m_ConductanceParameter;
   typename InputImageType::Pointer m_ConductanceImage;
-  double       m_ConductanceScalingParameter;
+  SA_FLOAT       m_ConductanceScalingParameter;
   unsigned int m_ConductanceScalingUpdateInterval;
-  double       m_FixedAverageGradientMagnitude;
+  SA_FLOAT       m_FixedAverageGradientMagnitude;
 
   TimeStepType m_TimeStep;
 };

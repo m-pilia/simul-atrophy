@@ -33,15 +33,15 @@ class InverseDisplacementImageFilter: public itk::ImageToImageFilter< TDisplacem
 	typedef TDisplacementField											DisplacementFieldType;
 	typedef typename DisplacementFieldType::Pointer			DisplacementFieldPointerType;
 
-	typedef double											SpacingValueType;
-	typedef double											RealValueType;
+	typedef SA_FLOAT											SpacingValueType;
+	typedef SA_FLOAT											RealValueType;
 
 	/* Container typedefs */
-	typedef typename DisplacementFieldType::PointType		PointType;
+	typedef typename itk::Point<SA_FLOAT, 3>	        	PointType;
 	typedef typename DisplacementFieldType::PixelType		VectorType;
 
 	/* Interpolator typedef */
-    typedef itk::VectorLinearInterpolateNearestNeighborExtrapolateImageFunction<DisplacementFieldType,double> FieldInterpolatorType;
+    typedef itk::VectorLinearInterpolateNearestNeighborExtrapolateImageFunction<DisplacementFieldType,SA_FLOAT> FieldInterpolatorType;
     typedef typename FieldInterpolatorType::Pointer                  FieldInterpolatorPointer;
   	typedef typename FieldInterpolatorType::OutputType               FieldInterpolatorOutputType;
 
@@ -49,7 +49,7 @@ class InverseDisplacementImageFilter: public itk::ImageToImageFilter< TDisplacem
 
 	/* Method for creation through the object factory. */
 	itkNewMacro(Self);
- 
+
 	/* Run-time type information (and related methods). */
     itkTypeMacro(InverseDisplacementImageFilter, itk::ImageToImageFilter);
 

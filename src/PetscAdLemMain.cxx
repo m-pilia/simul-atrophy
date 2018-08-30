@@ -232,7 +232,7 @@ int main(int argc,char **argv)
 {
 
     const unsigned int DIM = 3;
-    std::vector<double> wallVelocities(18);
+    std::vector<SA_FLOAT> wallVelocities(18);
     //TODO: Set from the user when dirichlet_at_walls boundary condition is used.
     /*0,1,2,		//south wall
       3,4,5,			//west wall

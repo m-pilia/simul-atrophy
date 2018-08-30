@@ -87,7 +87,7 @@ AdLem3D<DIM>::setBoundaryConditions(const std::string& boundaryCondition, bool r
 #undef __FUNCT__
 #define __FUNCT__ "setWallVelocities"
 template <unsigned int DIM>
-void AdLem3D<DIM>::setWallVelocities(std::vector<double>& wallVelocities) {
+void AdLem3D<DIM>::setWallVelocities(std::vector<SA_FLOAT>& wallVelocities) {
     if(mBc != DIRICHLET_AT_WALLS)
 	throw "setWallVelocities can be called only when dirichlet_at_walls boundary condition is set.";
     mWallVelocities = wallVelocities;
@@ -97,8 +97,8 @@ void AdLem3D<DIM>::setWallVelocities(std::vector<double>& wallVelocities) {
 #define __FUNCT__ "setLameParameters"
 template <unsigned int DIM>
 void AdLem3D<DIM>::setLameParameters(bool isMuConstant, bool useTensorLambda,
-				     double muBrain, double muCsf,
-				     double lambdaBrain, double lambdaCsf,
+				     SA_FLOAT muBrain, SA_FLOAT muCsf,
+				     SA_FLOAT lambdaBrain, SA_FLOAT lambdaCsf,
 				     std::string lambdaImageFile, std::string muImageFile)
 {
     mIsMuConstant	= isMuConstant;
@@ -290,7 +290,7 @@ bool AdLem3D<DIM>::isLambdaTensor() const
 #undef __FUNCT__
 #define __FUNCT__ "getWallVelocities"
 template <unsigned int DIM>
-void AdLem3D<DIM>::getWallVelocities(std::vector<double>& wallVelocities) {
+void AdLem3D<DIM>::getWallVelocities(std::vector<SA_FLOAT>& wallVelocities) {
     wallVelocities = mWallVelocities;
 }
 
@@ -357,7 +357,7 @@ int AdLem3D<DIM>::getFalxCerebriLabel() const
 #undef __FUNCT__
 #define __FUNCT__ "muAt"
 template <unsigned int DIM>
-double AdLem3D<DIM>::muAt(int x, int y, int z) const
+SA_FLOAT AdLem3D<DIM>::muAt(int x, int y, int z) const
 {
     if (mUseMuImage) {
 	typename ScalarImageType::IndexType pos;
@@ -377,7 +377,7 @@ double AdLem3D<DIM>::muAt(int x, int y, int z) const
 #undef __FUNCT__
 #define __FUNCT__ "lambdaAt"
 template <unsigned int DIM>
-double AdLem3D<DIM>::lambdaAt(int x, int y, int z,
+SA_FLOAT AdLem3D<DIM>::lambdaAt(int x, int y, int z,
 			      unsigned int Li, unsigned int Lj) const
 {
     if (mUseTensorLambda) {
@@ -404,7 +404,7 @@ double AdLem3D<DIM>::lambdaAt(int x, int y, int z,
 #undef __FUNCT__
 #define __FUNCT__ "aAt"
 template <unsigned int DIM>
-double AdLem3D<DIM>::aAt(int x, int y, int z) const
+SA_FLOAT AdLem3D<DIM>::aAt(int x, int y, int z) const
 {
     typename ScalarImageType::IndexType pos;
     pos.SetElement(0, mAtrophy->GetLargestPossibleRegion().GetIndex()[0] + x);
@@ -417,7 +417,7 @@ double AdLem3D<DIM>::aAt(int x, int y, int z) const
 #undef __FUNCT__
 #define __FUNCT__ "brainMaskAt"
 template <unsigned int DIM>
-double AdLem3D<DIM>::brainMaskAt(int x, int y, int z) const
+SA_FLOAT AdLem3D<DIM>::brainMaskAt(int x, int y, int z) const
 {
     typename ScalarImageType::IndexType pos;
     pos.SetElement(0, mBrainMask->GetLargestPossibleRegion().GetIndex()[0] + x);
@@ -443,7 +443,7 @@ int AdLem3D<DIM>::getRelaxIcLabel() const
 #undef __FUNCT__
 #define __FUNCT__ "dataAt"
 template <unsigned int DIM>
-double AdLem3D<DIM>::dataAt(std::string dType, int x, int y, int z, unsigned int Mi, unsigned int Mj) const
+SA_FLOAT AdLem3D<DIM>::dataAt(std::string dType, int x, int y, int z, unsigned int Mi, unsigned int Mj) const
 {
     if (dType.compare("mu") == 0)
         return muAt(x,y,z);
@@ -460,7 +460,7 @@ double AdLem3D<DIM>::dataAt(std::string dType, int x, int y, int z, unsigned int
 #undef __FUNCT__
 #define __FUNCT__ "getMuBrain"
 template <unsigned int DIM>
-double AdLem3D<DIM>::getMuBrain() const
+SA_FLOAT AdLem3D<DIM>::getMuBrain() const
 {
     return mMuBrain;
 }
@@ -469,7 +469,7 @@ double AdLem3D<DIM>::getMuBrain() const
 #undef __FUNCT__
 #define __FUNCT__ "getMuCsf"
 template <unsigned int DIM>
-double AdLem3D<DIM>::getMuCsf() const
+SA_FLOAT AdLem3D<DIM>::getMuCsf() const
 {
     return mMuCsf;
 }
@@ -477,7 +477,7 @@ double AdLem3D<DIM>::getMuCsf() const
 #undef __FUNCT__
 #define __FUNCT__ "getLambdaBrain"
 template <unsigned int DIM>
-double AdLem3D<DIM>::getLambdaBrain() const
+SA_FLOAT AdLem3D<DIM>::getLambdaBrain() const
 {
     return mLambdaBrain;
 }
@@ -485,7 +485,7 @@ double AdLem3D<DIM>::getLambdaBrain() const
 #undef __FUNCT__
 #define __FUNCT__ "getLambdaCsf"
 template <unsigned int DIM>
-double AdLem3D<DIM>::getLambdaCsf() const
+SA_FLOAT AdLem3D<DIM>::getLambdaCsf() const
 {
     return mLambdaCsf;
 }
@@ -517,7 +517,7 @@ int AdLem3D<DIM>::getZnum() const
 #undef __FUNCT__
 #define __FUNCT__ "getXspacing"
 template <unsigned int DIM>
-double AdLem3D<DIM>::getXspacing() const
+SA_FLOAT AdLem3D<DIM>::getXspacing() const
 {
     return mBrainMask->GetSpacing()[0];
 }
@@ -525,7 +525,7 @@ double AdLem3D<DIM>::getXspacing() const
 #undef __FUNCT__
 #define __FUNCT__ "getYspacing"
 template <unsigned int DIM>
-double AdLem3D<DIM>::getYspacing() const
+SA_FLOAT AdLem3D<DIM>::getYspacing() const
 {
     return mBrainMask->GetSpacing()[1];
 }
@@ -533,7 +533,7 @@ double AdLem3D<DIM>::getYspacing() const
 #undef __FUNCT__
 #define __FUNCT__ "getZspacing"
 template <unsigned int DIM>
-double AdLem3D<DIM>::getZspacing() const
+SA_FLOAT AdLem3D<DIM>::getZspacing() const
 {
     return mBrainMask->GetSpacing()[2];
 }
@@ -588,7 +588,7 @@ void AdLem3D<DIM>::setAtrophy(typename ScalarImageType::Pointer inputAtrophy)
 #undef __FUNCT__
 #define __FUNCT__ "scaleAtrophy"
 template <unsigned int DIM>
-void AdLem3D<DIM>::scaleAtrophy(double factor)
+void AdLem3D<DIM>::scaleAtrophy(SA_FLOAT factor)
 {
     typedef itk::MultiplyImageFilter<ScalarImageType, ScalarImageType, ScalarImageType> MultiplyImageFilterType;
     typename MultiplyImageFilterType::Pointer multiplyImageFilter = MultiplyImageFilterType::New();
@@ -604,11 +604,11 @@ template <unsigned int DIM>
 //total sum close to zero, i.e. < sumMaxValue.
 //FIXME: all boundary voxels has zero ? But what to do with CSF voxels that touch the skull!
 // This could be important when relaxIcIncsf is false, where compatibility condition is important.
-bool AdLem3D<DIM>::isAtrophySumZero(double sumMaxValue) {
+bool AdLem3D<DIM>::isAtrophySumZero(SA_FLOAT sumMaxValue) {
     //Check if sum is zero:
     itk::ImageRegionIterator<ScalarImageType> it(mAtrophy, mAtrophy->GetLargestPossibleRegion());
     it.GoToBegin();
-    double sum = 0;
+    SA_FLOAT sum = 0;
     while(!it.IsAtEnd()) {
         sum+=it.Get();
         ++it;
@@ -674,7 +674,7 @@ void AdLem3D<DIM>::prescribeUniformExpansionInCsf(){//Need to check this functio
 #undef __FUNCT__
 #define __FUNCT__ "modifyAtrophy"
 template <unsigned int DIM>
-void AdLem3D<DIM>::modifyAtrophy(int maskLabel, double maskValue, bool redistributeAtrophy, bool relaxIcInCsf) {
+void AdLem3D<DIM>::modifyAtrophy(int maskLabel, SA_FLOAT maskValue, bool redistributeAtrophy, bool relaxIcInCsf) {
     if(redistributeAtrophy) {
 	int rad = 1; 	// redistribution only on 3X3 neigborhood at present.
 	typedef itk::ConstShapedNeighborhoodIterator< ScalarImageType > ConstShapedNeighborhoodIteratorType;
@@ -698,7 +698,7 @@ void AdLem3D<DIM>::modifyAtrophy(int maskLabel, double maskValue, bool redistrib
 	    //values in these invalid position since we modify only tissue label voxels.
 	    ShapedNeighborhoodIteratorType atrophyIt (radius, mAtrophy, *fit); //iterate over atrophy map to change neighborhood values if required.
 	    for (maskIt.GoToBegin(), atrophyIt.GoToBegin(); !maskIt.IsAtEnd(); ++maskIt, ++atrophyIt) {
-		double eps = 1e-6;
+		SA_FLOAT eps = 1e-6;
 		if ( (int)maskIt.GetCenterPixel() == maskLabels::CSF) {
 		    typename ScalarImageType::PixelType atrophyCurrentPixel = atrophyIt.GetCenterPixel();
 		    if (std::abs(atrophyCurrentPixel) > eps) {

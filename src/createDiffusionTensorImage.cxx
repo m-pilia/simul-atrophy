@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 {
     std::string inRefFileName, outFileName;         //input reference file for origin and spacings; name of the output file to be created.
     std::string elements;       //elements of the tensor separted by comma, without spaces in lower triangular order.
-    double D[6];            //six diffusion tensor elements, in LT order.
+    SA_FLOAT D[6];            //six diffusion tensor elements, in LT order.
 
     //-------------- Set up the command line options-------------------------
     boost::program_options::options_description optionsDescription("Possible options");
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     //    std::cout<<std::endl<<D[i];
 
     //---------------------  Read the reference image type ----------------------//
-    typedef itk::Image<double, 3>                       ScalarImageType;
+    typedef itk::Image<SA_FLOAT, 3>                       ScalarImageType;
     typedef itk::ImageFileReader<ScalarImageType>       ScalarImageReaderType;
 
     ScalarImageReaderType::Pointer reader = ScalarImageReaderType::New();
@@ -76,7 +76,7 @@ int main(int argc, char **argv)
     ScalarImageType::Pointer refImg = reader->GetOutput();
 
     //-------------------- Tensor Image -------------------------------------//
-    typedef itk::Image<itk::DiffusionTensor3D<double>, 3>       TensorImageType;
+    typedef itk::Image<itk::DiffusionTensor3D<SA_FLOAT>, 3>       TensorImageType;
     TensorImageType::Pointer tensorImage = TensorImageType::New();
 
     //------------ Get important details from the reference image ------------//

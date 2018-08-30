@@ -33,7 +33,7 @@ AnisotropicDiffusionWithMaskImageFilter< TInputImage, TOutputImage >
   m_ConductanceParameter = 1.0;
   m_ConductanceScalingParameter = 1.0;
   m_ConductanceScalingUpdateInterval = 1;
-  m_TimeStep = 0.5 / std::pow( 2.0, static_cast< double >( ImageDimension ) );
+  m_TimeStep = 0.5 / std::pow( 2.0, static_cast< SA_FLOAT >( ImageDimension ) );
   m_FixedAverageGradientMagnitude = 1.0;
   m_GradientMagnitudeIsFixed = false;
 }
@@ -57,7 +57,7 @@ AnisotropicDiffusionWithMaskImageFilter< TInputImage, TOutputImage >
   f->SetTimeStep(m_TimeStep);
 
   // Check the timestep for stability
-  double minSpacing;
+  SA_FLOAT minSpacing;
   if ( this->GetUseImageSpacing() )
     {
     minSpacing = this->GetInput()->GetSpacing()[0];
@@ -73,14 +73,14 @@ AnisotropicDiffusionWithMaskImageFilter< TInputImage, TOutputImage >
     {
     minSpacing = 1.0;
     }
-  if ( m_TimeStep >  ( minSpacing / std::pow(2.0, static_cast< double >( ImageDimension ) + 1) ) )
+  if ( m_TimeStep >  ( minSpacing / std::pow(2.0, static_cast< SA_FLOAT >( ImageDimension ) + 1) ) )
     {
     //    f->SetTimeStep(1.0 / std::pow(2.0,
-    // static_cast<double>(ImageDimension)));
+    // static_cast<SA_FLOAT>(ImageDimension)));
     itkWarningMacro( << "Anisotropic diffusion unstable time step: "
                      << m_TimeStep << std::endl
                      << "Stable time step for this image must be smaller than "
-                     << minSpacing / std::pow( 2.0, static_cast< double >( ImageDimension + 1 ) ) );
+                     << minSpacing / std::pow( 2.0, static_cast< SA_FLOAT >( ImageDimension + 1 ) ) );
     }
 
   if ( m_GradientMagnitudeIsFixed == false )

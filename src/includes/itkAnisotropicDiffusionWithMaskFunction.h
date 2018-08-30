@@ -182,12 +182,12 @@ public:
   }
 
   /** Set/Get the conductance parameter.  The conductance parameter. */
-  void SetConductanceParameter(const double & c)
+  void SetConductanceParameter(const SA_FLOAT & c)
   {
     m_ConductanceParameter = c;
   }
 
-  const double & GetConductanceParameter() const
+  const SA_FLOAT & GetConductanceParameter() const
   {
     return m_ConductanceParameter;
   }
@@ -202,12 +202,12 @@ public:
   }
 
   /** Set/Get the average gradient magnitude squared. */
-  const double & GetAverageGradientMagnitudeSquared() const
+  const SA_FLOAT & GetAverageGradientMagnitudeSquared() const
   {
     return m_AverageGradientMagnitudeSquared;
   }
 
-  void SetAverageGradientMagnitudeSquared(const double & c)
+  void SetAverageGradientMagnitudeSquared(const SA_FLOAT & c)
   {
     m_AverageGradientMagnitudeSquared = c;
   }
@@ -255,8 +255,8 @@ private:
   AnisotropicDiffusionWithMaskFunction(const Self &); //purposely not implemented
   void operator=(const Self &);               //purposely not implemented
 
-  double       m_AverageGradientMagnitudeSquared;
-  double       m_ConductanceParameter;
+  SA_FLOAT       m_AverageGradientMagnitudeSquared;
+  SA_FLOAT       m_ConductanceParameter;
 
   TimeStepType m_TimeStep;
 };

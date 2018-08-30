@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     std::string displacementFile;
     std::string interpolator;
 
-    double scale;
+    SA_FLOAT scale;
     bool invertField;
     bool modulate;
     int bsplineOrder;
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
              "Filename of the displacement field image")
             ("interpolator", boost::program_options::value< std::string >(&interpolator)->default_value("linear"),
              "linear/bspline/nearestneighbor interpolator.")
-            ("scaleValue",boost::program_options::value< double >(&scale)->default_value(1.),
+            ("scaleValue",boost::program_options::value< SA_FLOAT >(&scale)->default_value(1.),
              "scale the displacement field by s.")
             ("modulate",boost::program_options::value< bool >(&modulate)->default_value(false),
              "true or false: modulate with Jacobian determinant of the field.")
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
     }
 
     //---------------------  Read the displacement field ----------------------//
-    typedef itk::Vector<double, 3>                      DisplacementPixelType;
+    typedef itk::Vector<SA_FLOAT, 3>                      DisplacementPixelType;
     typedef itk::Image<DisplacementPixelType, 3>        DisplacementImageType;
     typedef itk::ImageFileReader<DisplacementImageType> DisplacementReaderType;
     DisplacementImageType::Pointer warperField;
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
     warperField = displacementReader->GetOutput();
 
     //---------------------- Scale the displacement field --------------------//
-    double eps = 0.001;
+    SA_FLOAT eps = 0.001;
     if( !((scale>(1-eps)) && (scale < (1+eps))) ){
         itk::ImageRegionIterator<DisplacementImageType> iterator(warperField,warperField->GetLargestPossibleRegion());
         iterator.GoToBegin();
@@ -132,7 +132,7 @@ int main(int argc, char **argv)
     }
 
     //--------------------  Read and warp the input image -------------------------//
-    typedef double                                  ImagePixelType;
+    typedef SA_FLOAT                                  ImagePixelType;
     typedef itk::Image<ImagePixelType, 3>           ImageType;
     typedef itk::ImageFileReader<ImageType>         ImageReaderType;
     ImageType::Pointer   inputImage;
@@ -170,7 +170,7 @@ int main(int argc, char **argv)
 
         //-------------------- Jacobian determinant of the input field ----------------------------------//
         if(modulate) {
-            typedef itk::DisplacementFieldJacobianDeterminantFilter< DisplacementImageType, double > JacobianFilterType;
+            typedef itk::DisplacementFieldJacobianDeterminantFilter< DisplacementImageType, SA_FLOAT > JacobianFilterType;
             JacobianFilterType::Pointer jacobianFilter = JacobianFilterType::New();
             jacobianFilter->SetUseImageSpacingOff();
             jacobianFilter->SetInput(warperField);

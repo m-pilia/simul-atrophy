@@ -45,6 +45,12 @@ build$ make
 
 This should install the software to your machine.
 
+The software uses double precision floating point arithmetic by default. To
+change this, the option `-DSA_FLOAT=<type>` can be specified, where `<type>`
+can be one of `float`, `double`, `__float128`, `__fp16`. Note that the selected
+type must be supported by the compiler, and **PETSc must be built with a
+corresponding `PetscScalar` type**.
+
 ## Quickstart
 The main simulator executable is `build/src/simul_atrophy`.
 Run with `-h` option to see in detail how to use it.

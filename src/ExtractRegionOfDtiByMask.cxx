@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
     // --------------------------------------------------------------------//
     typedef itk::DiffusionTensor3D< float > PixelType;
-    //  typedef itk::Image<itk::DiffusionTensor3D<double>, 3>       TensorImageType;
+    //  typedef itk::Image<itk::DiffusionTensor3D<SA_FLOAT>, 3>       TensorImageType;
     typedef itk::Image<PixelType, ImageDimension> ImageType;
     typedef itk::ImageFileReader<ImageType>       ReaderType;
     typename ReaderType::Pointer reader = ReaderType::New();

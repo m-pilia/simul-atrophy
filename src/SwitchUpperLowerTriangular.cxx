@@ -31,7 +31,7 @@ int main(int argc, char **argv)
     }
     std::string inFile(argv[1]), outFile(argv[2]);
 
-    typedef itk::Image<itk::DiffusionTensor3D<double>, 3> ImageType;
+    typedef itk::Image<itk::DiffusionTensor3D<SA_FLOAT>, 3> ImageType;
     typedef itk::ImageFileReader<ImageType>       ImageReaderType;
 
     ImageReaderType::Pointer reader = ImageReaderType::New();
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     typename ImageType::PixelType currPixel;
     while (!it.IsAtEnd()) {
         currPixel = it.Get();
-        double tmp;
+        SA_FLOAT tmp;
         tmp = currPixel[2];
         currPixel[2] = currPixel[3];
         currPixel[3] = tmp;
